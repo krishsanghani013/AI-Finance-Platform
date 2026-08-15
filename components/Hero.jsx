@@ -1,5 +1,5 @@
 "use client"
-import { Button } from '@base-ui/react'
+import { Button } from '@/components/ui/button'
 import React, { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -41,7 +41,7 @@ const HeroSection = () => {
                         <Button size="lg" className="px-8">Get Started</Button>
                     </Link>
                     <Link href="/dashboard">
-                        <Button size="lg" className="px-8 outline">Watch Demo</Button>
+                        <Button size="lg" variant="outline" className="px-8">Watch Demo</Button>
                     </Link>
                 </div>
                 <div className='hero-image-wrapper'>
