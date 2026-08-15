@@ -42,8 +42,12 @@ function Drawer({
 }
 
 function DrawerTrigger({
+  asChild,
   ...props
 }) {
+  if (asChild) {
+    return <DrawerPrimitive.Trigger data-slot="drawer-trigger" render={props.children} {...props} children={undefined} />;
+  }
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
 }
 
@@ -54,8 +58,12 @@ function DrawerPortal({
 }
 
 function DrawerClose({
+  asChild,
   ...props
 }) {
+  if (asChild) {
+    return <DrawerPrimitive.Close data-slot="drawer-close" render={props.children} {...props} children={undefined} />;
+  }
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />;
 }
 

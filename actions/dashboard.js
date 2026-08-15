@@ -1,6 +1,7 @@
 "use server"
-import { auth } from "@clerk/nextjs/dist/server"
+import { auth } from "@clerk/nextjs/server"
 import { revalidatePath } from "next/cache";
+import { db } from "@/lib/prisma";
 
 const serializeTransaction = (obj) => {
     const serialized = { ...obj };
@@ -8,6 +9,7 @@ const serializeTransaction = (obj) => {
     if (obj.balance) {
         serialized.balance = obj.balance.toNumber();
     }
+    return serialized;
 }
 
 export async function createAccount(data) {
