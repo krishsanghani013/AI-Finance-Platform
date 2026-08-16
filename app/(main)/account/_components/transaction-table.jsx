@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import {
     Table,
@@ -10,10 +12,13 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Checkbox } from '@/components/ui/checkbox'
+import { format } from 'date-fns'
 
 const TransactionTable = ({ transactions }) => {
 
-    const handleSort = ()=>{
+    const filteredAndSortedTransactions = transactions
+
+    const handleSort = () => {
 
 
     }
@@ -30,20 +35,41 @@ const TransactionTable = ({ transactions }) => {
                             <TableHead className="w-[50px]">
                                 <Checkbox />
                             </TableHead>
-                            <TableHead className="cursor-pointer" onClick={handleSort}>
-                                Date
+                            <TableHead className="cursor-pointer" onClick={() => handleSort("data")}>
+                                <div className='flex items-center'>Date</div>
                             </TableHead>
+                            <TableHead>Description</TableHead>
+                            <TableHead className="cursor-pointer" onClick={() => handleSort("category")}>
+                                <div className='flex items-center'>Category</div>
+                            </TableHead>
+                            <TableHead className="cursor-pointer" onClick={() => handleSort("amount")}>
+                                <div className='flex items-end'>Amount</div>
+                            </TableHead>
+                            <TableHead>Recurring</TableHead>
+                            <TableHead className='w-[50px]'></TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {transactions.map((transaction) => (
-                            <TableRow key={transaction.id}>
-                                <TableCell className="font-medium">{transaction.description}</TableCell>
-                                <TableCell>{transaction.category}</TableCell>
-                                <TableCell>{transaction.type}</TableCell>
-                                <TableCell className="text-right">${transaction.amount}</TableCell>
+                        {filteredAndSortedTransactions.length === 0 ? (
+                            <TableRow>
+                                <TableCell colSpan={7} className='text-center text-muted-foreground'>
+                                    No Transactions Found
+                                </TableCell>
                             </TableRow>
-                        ))}
+                        ) : (
+                            filteredAndSortedTransactions.map((transaction) => (
+                                <TableRow key={transaction.id}>
+                                    <TableCell className="font-medium">
+                                        <Checkbox />
+                                    </TableCell>
+                                    <TableCell>
+                                        {format(new Date(transaction.date), "PP")}
+                                    </TableCell>
+                                    <TableCell>{transaction.type}</TableCell>
+                                    <TableCell className="text-right">${transaction.amount}</TableCell>
+                                </TableRow>
+                            ))
+                        )}
                     </TableBody>
                     <TableFooter>
                         <TableRow>
