@@ -1,9 +1,9 @@
 import React from 'react';
 
-const AccountDetailsPage = () => {
+const AccountsPage = () => {
   return (
     <div>Account Details</div>
   );
 };
 
-export default AccountDetailsPage;
+export default AccountsPage;

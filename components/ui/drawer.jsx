@@ -46,7 +46,7 @@ function DrawerTrigger({
   ...props
 }) {
   if (asChild) {
-    return <DrawerPrimitive.Trigger data-slot="drawer-trigger" render={props.children} {...props} children={undefined} />;
+    return <DrawerPrimitive.Trigger render={props.children} nativeButton={false} {...props} children={undefined} />;
   }
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
 }
@@ -62,7 +62,7 @@ function DrawerClose({
   ...props
 }) {
   if (asChild) {
-    return <DrawerPrimitive.Close data-slot="drawer-close" render={props.children} {...props} children={undefined} />;
+    return <DrawerPrimitive.Close render={props.children} {...props} children={undefined} />;
   }
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />;
 }

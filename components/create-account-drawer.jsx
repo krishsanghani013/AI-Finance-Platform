@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -13,7 +13,6 @@ import {
     DrawerContent,
     DrawerHeader,
     DrawerTitle,
-    DrawerTrigger,
     DrawerClose,
     DrawerDescription,
 } from "@/components/ui/drawer";
@@ -63,7 +62,12 @@ const CreateAccountDrawer = ({ children }) => {
 
     return (
         <Drawer showSwipeHandle open={open} onOpenChange={setOpen}>
-            <DrawerTrigger asChild>{children}</DrawerTrigger>
+            {React.cloneElement(children, {
+                onClick: (e) => {
+                    children.props.onClick?.(e);
+                    setOpen(true);
+                }
+            })}
             <DrawerContent>
                 <DrawerHeader>
                     <DrawerTitle>Create New Account</DrawerTitle>
