@@ -8,6 +8,7 @@ function Progress({
   className,
   children,
   value,
+  extraStyles,
   ...props
 }) {
   return (
@@ -18,7 +19,7 @@ function Progress({
       {...props}>
       {children}
       <ProgressTrack>
-        <ProgressIndicator />
+        <ProgressIndicator className={extraStyles} />
       </ProgressTrack>
     </ProgressPrimitive.Root>
   );
