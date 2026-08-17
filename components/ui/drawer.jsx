@@ -43,12 +43,13 @@ function Drawer({
 
 function DrawerTrigger({
   asChild,
+  children,
   ...props
 }) {
   if (asChild) {
-    return <DrawerPrimitive.Trigger render={props.children} nativeButton={false} {...props} children={undefined} />;
+    return <DrawerPrimitive.Trigger render={children} nativeButton={false} {...props} />;
   }
-  return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
+  return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props}>{children}</DrawerPrimitive.Trigger>;
 }
 
 function DrawerPortal({
@@ -59,12 +60,13 @@ function DrawerPortal({
 
 function DrawerClose({
   asChild,
+  children,
   ...props
 }) {
   if (asChild) {
-    return <DrawerPrimitive.Close render={props.children} {...props} children={undefined} />;
+    return <DrawerPrimitive.Close render={children} {...props} />;
   }
-  return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />;
+  return <DrawerPrimitive.Close data-slot="drawer-close" {...props}>{children}</DrawerPrimitive.Close>;
 }
 
 function DrawerOverlay({

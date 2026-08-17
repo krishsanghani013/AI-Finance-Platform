@@ -174,12 +174,19 @@ export default function TransactionTable({ transactions }) {
         )
             return;
 
-        deleteFn(selectedIds);
+        const res = await deleteFn(selectedIds);
+        if (res && res.success) {
+            setSelectedIds([]);
+        }
     };
 
     useEffect(() => {
         if (deleted && !deleteLoading) {
-            toast.error("Transactions deleted successfully");
+            if (deleted.success) {
+                toast.success("Transactions deleted successfully");
+            } else {
+                toast.error(deleted.error || "Failed to delete transactions");
+            }
         }
     }, [deleted, deleteLoading]);
 
@@ -438,7 +445,16 @@ export default function TransactionTable({ transactions }) {
                                                 <DropdownMenuSeparator />
                                                 <DropdownMenuItem
                                                     className="text-destructive"
-                                                    onClick={() => deleteFn([transaction.id])}
+                                                    onClick={async () => {
+                                                        if (window.confirm("Are you sure you want to delete this transaction?")) {
+                                                            const res = await deleteFn([transaction.id]);
+                                                            if (res && res.success) {
+                                                                setSelectedIds((current) =>
+                                                                    current.filter((id) => id !== transaction.id)
+                                                                );
+                                                            }
+                                                        }
+                                                    }}
                                                 >
                                                     Delete
                                                 </DropdownMenuItem>

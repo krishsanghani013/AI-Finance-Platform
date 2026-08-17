@@ -107,10 +107,11 @@ export async function bulkDeleteTransactions(transactionIds) {
         });
 
         const accountUpdates = transactions.reduce((acc, transaction) => {
+            const amount = transaction.amount.toNumber();
             const change =
                 transaction.type === "EXPENSE"
-                    ? transaction.amount
-                    : -transaction.amount;
+                    ? amount
+                    : -amount;
             acc[transaction.accountId] = (acc[transaction.accountId] || 0) + change;
             return acc;
         }, {});
