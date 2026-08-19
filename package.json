@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^5.9.0",
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
+    "@react-email/components": "^1.0.12",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
@@ -28,6 +29,7 @@
     "react-hook-form": "^7.85.0",
     "react-spinners": "^0.17.0",
     "recharts": "^3.10.1",
+    "resend": "^6.20.0",
     "shadcn": "^4.18.0",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.6.0",
@@ -39,7 +41,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.1",
-    "prisma": "^7.9.1",
+    "prisma": "^6.12.0",
     "tailwindcss": "^4"
   }
 }
