@@ -368,3 +368,5 @@ export function AddTransactionForm({
         </form>
     );
 }
+
+export default AddTransactionForm;

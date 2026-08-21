@@ -511,3 +511,5 @@ export default function TransactionTable({ transactions }) {
         </div>
     );
 }
+
+export { TransactionTable };

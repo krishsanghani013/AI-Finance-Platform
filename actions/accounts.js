@@ -145,3 +145,54 @@ export async function bulkDeleteTransactions(transactionIds) {
         return { success: false, error: error.message };
     }
 }
+
+export async function deleteAccount(accountId) {
+    try {
+        const { userId } = await auth();
+        if (!userId) throw new Error("Unauthorized: No userId found.");
+
+        const user = await db.user.findUnique({
+            where: { clerkUserId: userId },
+        });
+        if (!user) throw new Error("User not Found");
+
+        const targetId = typeof accountId === "object" ? accountId.id : accountId;
+
+        const account = await db.account.findUnique({
+            where: {
+                id: targetId,
+                userId: user.id,
+            },
+        });
+
+        if (!account) throw new Error("Account not found");
+
+        // Delete the account (transactions cascade-delete)
+        await db.account.delete({
+            where: {
+                id: targetId,
+                userId: user.id,
+            },
+        });
+
+        // If the deleted account was default, assign another account as default if one exists
+        if (account.isDefault) {
+            const remainingAccount = await db.account.findFirst({
+                where: { userId: user.id },
+                orderBy: { createdAt: "asc" },
+            });
+
+            if (remainingAccount) {
+                await db.account.update({
+                    where: { id: remainingAccount.id },
+                    data: { isDefault: true },
+                });
+            }
+        }
+
+        revalidatePath("/dashboard");
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}

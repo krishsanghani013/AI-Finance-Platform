@@ -22,13 +22,14 @@ import {
     ProgressValue,
 } from "@/components/ui/progress"
 
-const BudgetProgress = ({ initialBudget, currentExpense }) => {
+const BudgetProgress = ({ initialBudget, currentExpense, currentExpenses }) => {
     const [isEditing, setIsEditing] = useState(false)
     const [newBudget, setNewBudget] = useState(
         initialBudget?.amount?.toString() || ""
     )
 
-    const percentUsed = initialBudget ? (currentExpense / initialBudget.amount) * 100 : 0
+    const spent = currentExpenses ?? currentExpense ?? 0;
+    const percentUsed = initialBudget ? (spent / initialBudget.amount) * 100 : 0
 
     const {
         loading: isLoading,
@@ -89,7 +90,7 @@ const BudgetProgress = ({ initialBudget, currentExpense }) => {
                         ) : (
                             <>
                                 <CardDescription>
-                                    {initialBudget ? `$${currentExpense.toFixed(2)} of $${initialBudget.amount.toFixed(2)} spent` : "No budget set"}
+                                    {initialBudget ? `$${spent.toFixed(2)} of $${initialBudget.amount.toFixed(2)} spent` : "No budget set"}
                                 </CardDescription>
                                 <Button
                                     variant='ghost'
@@ -104,7 +105,6 @@ const BudgetProgress = ({ initialBudget, currentExpense }) => {
                         )}
                     </div>
                 </div>
-                <CardAction>Card Action</CardAction>
             </CardHeader>
             <CardContent>
                 {initialBudget && <div className='space-y-2'>
@@ -125,4 +125,5 @@ const BudgetProgress = ({ initialBudget, currentExpense }) => {
     )
 }
 
+export { BudgetProgress }
 export default BudgetProgress

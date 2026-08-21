@@ -181,4 +181,5 @@ const AccountChart = ({ transactions }) => {
     )
 }
 
-export default AccountChart
+export { AccountChart };
+export default AccountChart;
