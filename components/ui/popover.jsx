@@ -12,9 +12,14 @@ function Popover({
 }
 
 function PopoverTrigger({
+  asChild,
+  children,
   ...props
 }) {
-  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />;
+  if (asChild) {
+    return <PopoverPrimitive.Trigger render={children} {...props} />;
+  }
+  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props}>{children}</PopoverPrimitive.Trigger>;
 }
 
 function PopoverContent({

@@ -108,9 +108,11 @@ const AccountChart = ({ transactions }) => {
                 <CardTitle className="text-base font-normal">
                     Transaction Overview
                 </CardTitle>
-                <Select defaultValue={dateRange} onValueChange={setDateRange}>
+                <Select defaultValue={dateRange} value={dateRange} onValueChange={setDateRange}>
                     <SelectTrigger className="w-35">
-                        <SelectValue placeholder="Select range" />
+                        <SelectValue placeholder="Select range">
+                            {(range) => DATE_RANGE[range]?.label || range || "Select range"}
+                        </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                         {Object.entries(DATE_RANGE).map(([key, { label }]) => (

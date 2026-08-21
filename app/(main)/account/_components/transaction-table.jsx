@@ -230,7 +230,15 @@ export default function TransactionTable({ transactions }) {
                         }}
                     >
                         <SelectTrigger className="w-32.5">
-                            <SelectValue placeholder="All Types" />
+                            <SelectValue placeholder="All Types">
+                                {(val) =>
+                                    val === "INCOME"
+                                        ? "Income"
+                                        : val === "EXPENSE"
+                                        ? "Expense"
+                                        : "All Types"
+                                }
+                            </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="INCOME">Income</SelectItem>
@@ -246,7 +254,15 @@ export default function TransactionTable({ transactions }) {
                         }}
                     >
                         <SelectTrigger className="w-32.5">
-                            <SelectValue placeholder="All Transactions" />
+                            <SelectValue placeholder="All Transactions">
+                                {(val) =>
+                                    val === "recurring"
+                                        ? "Recurring Only"
+                                        : val === "non-recurring"
+                                        ? "Non-recurring Only"
+                                        : "All Transactions"
+                                }
+                            </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="recurring">Recurring Only</SelectItem>

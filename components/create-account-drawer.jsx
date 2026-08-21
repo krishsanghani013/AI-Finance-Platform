@@ -90,11 +90,19 @@ const CreateAccountDrawer = ({ children }) => {
                         <div className="space-y-2">
                             <label htmlFor="type" className="text-sm font-medium">Account Type</label>
                             <Select
-                                value={watch("type")}
+                                value={watch("type") || "CURRENT"}
                                 onValueChange={(value) => setValue("type", value)}
                             >
                                 <SelectTrigger id="type">
-                                    <SelectValue placeholder="Select type" />
+                                    <SelectValue placeholder="Select type">
+                                        {(val) =>
+                                            val === "CURRENT"
+                                                ? "Current"
+                                                : val === "SAVINGS"
+                                                ? "Savings"
+                                                : "Select type"
+                                        }
+                                    </SelectValue>
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="CURRENT">Current</SelectItem>
@@ -158,4 +166,5 @@ const CreateAccountDrawer = ({ children }) => {
     )
 }
 
-export default CreateAccountDrawer
+export { CreateAccountDrawer };
+export default CreateAccountDrawer;
