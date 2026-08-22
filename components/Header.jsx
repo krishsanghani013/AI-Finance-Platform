@@ -14,19 +14,15 @@ const Header = async () => {
       <nav className="container mx-auto flex items-center justify-between px-4 sm:px-6 py-3.5">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative h-9 w-9 rounded-xl bg-gradient-to-tr from-orange-500 via-amber-500 to-orange-600 p-[1.5px] shadow-md shadow-orange-500/20 group-hover:shadow-orange-500/40 transition-all">
-            <div className="h-full w-full bg-[#0B0D14] rounded-[10px] flex items-center justify-center overflow-hidden">
-              <Image
-                src="/Flowoid_icon_cropped.png"
-                alt="Flowoid Icon"
-                width={32}
-                height={32}
-                className="h-6 w-6 object-contain brightness-110"
-                priority
-              />
-            </div>
-          </div>
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <Image
+            src="/Flowoid_icon_cropped.png"
+            alt="Flowoid Icon"
+            width={36}
+            height={36}
+            className="h-8 w-8 sm:h-9 sm:w-9 object-contain group-hover:scale-105 transition-transform duration-200"
+            priority
+          />
           <div className="flex items-center gap-1.5">
             <span className="text-lg sm:text-xl font-extrabold tracking-tight text-white group-hover:text-orange-300 transition-colors">
               Flowoid
