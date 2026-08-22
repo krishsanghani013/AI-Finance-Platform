@@ -17,6 +17,7 @@ import {
   Repeat,
   DollarSign,
   X,
+  MoreHorizontal,
 } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -167,6 +168,8 @@ export function AddTransactionForm({
 
   const topCategories = filteredCategories.slice(0, 4);
   const selectedCategoryObj = categories.find((c) => c.id === category);
+  const isOtherCategorySelected =
+    Boolean(category) && !topCategories.some((cat) => cat.id === category);
 
   // Quick Amount preset increment
   const handleAddPresetAmount = (presetVal) => {
@@ -383,14 +386,14 @@ export function AddTransactionForm({
               <span className="text-xs text-slate-400">Step 2 of 2</span>
             </div>
 
-            {/* Category Selector with Top Quick Chips */}
+            {/* Category Selector with Equal-Sized Buttons & More Dropdown */}
             <div className="space-y-2.5">
               <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Category
               </label>
 
-              {/* Quick Select Top Category Chips */}
-              <div className="flex items-center gap-1.5 flex-wrap">
+              {/* Uniform Equal-Sized Category Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                 {topCategories.map((cat) => {
                   const isSelected = category === cat.id;
                   return (
@@ -398,63 +401,74 @@ export function AddTransactionForm({
                       key={cat.id}
                       type="button"
                       onClick={() => setValue("category", cat.id, { shouldValidate: true })}
-                      className={`inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-xl border transition-all cursor-pointer active:scale-95 ${
+                      className={cn(
+                        "h-11 px-2.5 py-2 rounded-xl border text-xs font-medium transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95 text-center truncate",
                         isSelected
-                          ? "bg-orange-500/20 border-orange-500/50 text-white shadow-sm"
-                          : "bg-white/[0.03] border-white/[0.08] text-slate-300 hover:bg-white/[0.07]"
-                      }`}
+                          ? "bg-orange-500/20 border-orange-500/50 text-white shadow-sm shadow-orange-500/10 font-semibold"
+                          : "bg-[#0A0C13] border-white/[0.08] text-slate-300 hover:bg-white/[0.05] hover:text-white hover:border-white/[0.18]"
+                      )}
                     >
                       <CategoryIcon
                         iconName={cat.icon}
                         color={cat.color}
                         size="sm"
-                        className="h-3 w-3"
+                        className="h-3.5 w-3.5 flex-shrink-0"
                       />
-                      <span>{cat.name}</span>
+                      <span className="truncate">{cat.name}</span>
                     </button>
                   );
                 })}
-              </div>
 
-              {/* Full Category Dropdown */}
-              <Select
-                onValueChange={(value) => setValue("category", value, { shouldValidate: true })}
-                value={category || ""}
-              >
-                <SelectTrigger className="w-full bg-[#0A0C13] border-white/[0.12] h-12 rounded-xl text-slate-200 focus:border-orange-500 focus:ring-orange-500/20">
-                  <SelectValue placeholder="Or select full category list">
-                    {(selectedCategory) => {
-                      const cat = categories.find((c) => c.id === selectedCategory);
-                      return cat ? (
-                        <div className="flex items-center gap-2">
+                {/* 5th Button: Same Size 'More Categories' Dropdown Trigger */}
+                <Select
+                  onValueChange={(value) => setValue("category", value, { shouldValidate: true })}
+                  value={isOtherCategorySelected ? category : ""}
+                >
+                  <SelectTrigger
+                    className={cn(
+                      "w-full h-11 px-2.5 py-2 rounded-xl border text-xs font-medium transition-all cursor-pointer flex items-center justify-between gap-1.5 focus:ring-0 focus:ring-offset-0 focus:border-orange-500 active:scale-95",
+                      isOtherCategorySelected
+                        ? "bg-orange-500/20 border-orange-500/50 text-white shadow-sm shadow-orange-500/10 font-semibold"
+                        : "bg-[#0A0C13] border-white/[0.08] text-slate-300 hover:bg-white/[0.05] hover:text-white hover:border-white/[0.18]"
+                    )}
+                  >
+                    <div className="flex items-center gap-1.5 min-w-0 truncate">
+                      {isOtherCategorySelected && selectedCategoryObj ? (
+                        <>
+                          <CategoryIcon
+                            iconName={selectedCategoryObj.icon}
+                            color={selectedCategoryObj.color}
+                            size="sm"
+                            className="h-3.5 w-3.5 flex-shrink-0"
+                          />
+                          <span className="truncate">{selectedCategoryObj.name}</span>
+                        </>
+                      ) : (
+                        <>
+                          <div className="h-3.5 w-3.5 rounded-full bg-white/[0.06] flex items-center justify-center flex-shrink-0">
+                            <MoreHorizontal className="h-3 w-3 text-slate-400" />
+                          </div>
+                          <span className="truncate">More...</span>
+                        </>
+                      )}
+                    </div>
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#12151F] border-white/10 text-slate-200 max-h-64">
+                    {filteredCategories.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id} className="cursor-pointer">
+                        <div className="flex items-center gap-2.5">
                           <CategoryIcon
                             iconName={cat.icon}
                             color={cat.color}
                             size="sm"
                           />
-                          <span className="font-medium text-white">{cat.name}</span>
+                          <span>{cat.name}</span>
                         </div>
-                      ) : (
-                        "Select category"
-                      );
-                    }}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent className="bg-[#12151F] border-white/10 text-slate-200 max-h-64">
-                  {filteredCategories.map((cat) => (
-                    <SelectItem key={cat.id} value={cat.id} className="cursor-pointer">
-                      <div className="flex items-center gap-2.5">
-                        <CategoryIcon
-                          iconName={cat.icon}
-                          color={cat.color}
-                          size="sm"
-                        />
-                        <span>{cat.name}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
               {/* Subcategories tags helper */}
               {selectedCategoryObj?.subcategories && (

@@ -34,14 +34,15 @@ export default async function DashboardPage() {
     budgetData = await getCurrentBudget(defaultAccount.id);
   }
 
-  // --- Calculate Analytics ---
+  // --- Calculate Analytics for Default Account ---
   const allTransactions = transactions || [];
+  const defaultTransactions = defaultAccount
+    ? allTransactions.filter((t) => t.accountId === defaultAccount.id)
+    : allTransactions;
+
+  const defaultBalance = defaultAccount ? parseFloat(defaultAccount.balance || 0) : 0;
+
   const currentDate = new Date();
-
-  // 1. Total Balance Across All Accounts
-  const totalBalance = accounts?.reduce((sum, acc) => sum + parseFloat(acc.balance || 0), 0) || 0;
-
-  // 2. Current Month vs Previous Month Income & Expenses
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
   const prevMonthDate = new Date(currentYear, currentMonth - 1, 1);
@@ -53,10 +54,10 @@ export default async function DashboardPage() {
   let prevMonthIncome = 0;
   let prevMonthExpense = 0;
 
-  // Category Expenses map for spending breakdown
+  // Category Expenses map for spending breakdown of default account
   const categoryTotals = {};
 
-  allTransactions.forEach((t) => {
+  defaultTransactions.forEach((t) => {
     const tDate = new Date(t.date);
     const tMonth = tDate.getMonth();
     const tYear = tDate.getFullYear();
@@ -79,24 +80,29 @@ export default async function DashboardPage() {
     }
   });
 
-  // Calculate percentage changes
+  // Calculate percentage changes for default account
   const incomeChangePercent =
     prevMonthIncome > 0
       ? ((currentMonthIncome - prevMonthIncome) / prevMonthIncome) * 100
       : currentMonthIncome > 0
-      ? 8.2
+      ? 100
       : 0;
 
   const expenseChangePercent =
     prevMonthExpense > 0
       ? ((currentMonthExpense - prevMonthExpense) / prevMonthExpense) * 100
       : currentMonthExpense > 0
-      ? -4.1
+      ? 100
       : 0;
 
-  const balanceChangePercent = 12.4; // Realistic healthy default trajectory
+  const netSavingsThisMonth = currentMonthIncome - currentMonthExpense;
+  const startingEstBalance = defaultBalance - netSavingsThisMonth;
+  const balanceChangePercent =
+    startingEstBalance > 0
+      ? (netSavingsThisMonth / startingEstBalance) * 100
+      : 0;
 
-  // 3. Historical Cash Flow (Last 6 Months)
+  // 3. Historical Cash Flow (Last 6 Months) for Default Account
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const monthlyCashFlowData = [];
 
@@ -109,7 +115,7 @@ export default async function DashboardPage() {
     let inc = 0;
     let exp = 0;
 
-    allTransactions.forEach((t) => {
+    defaultTransactions.forEach((t) => {
       const tDate = new Date(t.date);
       if (tDate.getMonth() === targetM && tDate.getFullYear() === targetY) {
         if (t.type === "INCOME") inc += parseFloat(t.amount || 0);
@@ -119,64 +125,47 @@ export default async function DashboardPage() {
 
     monthlyCashFlowData.push({
       month: label,
-      income: inc,
-      expense: exp,
-      net: inc - exp,
+      income: Number(inc.toFixed(2)),
+      expense: Number(exp.toFixed(2)),
+      net: Number((inc - exp).toFixed(2)),
     });
   }
 
-  // If there's minimal data, provide balanced baseline data
-  const hasRealData = monthlyCashFlowData.some((d) => d.income > 0 || d.expense > 0);
-  const finalCashFlowData = hasRealData
-    ? monthlyCashFlowData
-    : [
-        { month: "Jan", income: 7200, expense: 3400, net: 3800 },
-        { month: "Feb", income: 7500, expense: 3100, net: 4400 },
-        { month: "Mar", income: 8100, expense: 4200, net: 3900 },
-        { month: "Apr", income: 7900, expense: 3600, net: 4300 },
-        { month: "May", income: 8300, expense: 3900, net: 4400 },
-        { month: "Jun", income: 8420, expense: 3280, net: 5140 },
-      ];
-
-  // 4. Spending Category Array
+  // 4. Spending Category Array for Default Account
   const spendingCategoryData = Object.entries(categoryTotals).map(([cat, val]) => ({
     name: cat,
-    value: val,
+    value: Number(val.toFixed(2)),
   }));
-
-  // Fallback realistic metrics if empty
-  const displayTotalBalance = totalBalance > 0 ? totalBalance : 24680.42;
-  const displayIncome = currentMonthIncome > 0 ? currentMonthIncome : 8420.00;
-  const displayExpense = currentMonthExpense > 0 ? currentMonthExpense : 3280.00;
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fadeIn">
       {/* 1. Header Greeting & Quick Actions */}
-      <DashboardHeader userName={userName} />
+      <DashboardHeader userName={userName} defaultAccount={defaultAccount} />
 
-      {/* 2. Top Summary KPI Cards (3 Columns on laptop, prioritized) */}
+      {/* 2. Top Summary KPI Cards for Default Account */}
       <DashboardKpiCards
-        totalBalance={displayTotalBalance}
-        totalIncome={displayIncome}
-        totalExpense={displayExpense}
+        totalBalance={defaultBalance}
+        totalIncome={currentMonthIncome}
+        totalExpense={currentMonthExpense}
         balanceChangePercent={balanceChangePercent}
         incomeChangePercent={incomeChangePercent}
         expenseChangePercent={expenseChangePercent}
         accountsCount={accounts?.length || 1}
+        accountName={defaultAccount?.name || "Personal"}
       />
 
-      {/* 3. Middle Row: Cash Flow Chart & Spending Breakdown Donut (Laptop: 2 Columns 7:5) */}
+      {/* 3. Middle Row: Cash Flow Chart & Spending Breakdown Donut (Default Account Data) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         {/* Left Column: Cash Flow (7 Cols on Laptop) */}
         <div className="lg:col-span-7 flex flex-col">
-          <CashFlowChart monthlyData={finalCashFlowData} />
+          <CashFlowChart monthlyData={monthlyCashFlowData} />
         </div>
 
         {/* Right Column: Spending Breakdown (5 Cols on Laptop) */}
         <div className="lg:col-span-5 flex flex-col">
           <SpendingBreakdown
             categoryData={spendingCategoryData}
-            totalExpenses={displayExpense}
+            totalExpenses={currentMonthExpense}
           />
         </div>
       </div>
@@ -224,9 +213,9 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* 6. Recent Transactions List */}
+      {/* 6. Recent Transactions List (Filtered to Default Account by default) */}
       <RecentTransactions
-        transactions={allTransactions}
+        transactions={defaultTransactions}
         accounts={accounts || []}
       />
     </div>

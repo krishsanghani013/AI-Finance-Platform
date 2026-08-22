@@ -11,7 +11,12 @@ export const metadata = {
 };
 
 export default async function AddTransactionPage({ searchParams }) {
-  const accounts = await getUserAccounts();
+  let accounts = [];
+  try {
+    accounts = await getUserAccounts();
+  } catch {
+    accounts = [];
+  }
   const resolvedSearchParams = await searchParams;
   const editId = resolvedSearchParams?.edit;
 

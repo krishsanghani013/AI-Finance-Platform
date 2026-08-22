@@ -50,3 +50,22 @@
 │  ☕  Starbucks            Food          -$12.50              │
 │  💼  Salary              Income       +$4,200               │
 └─────────────────────────────────────────────────────────────┘
+
+3. Your transaction table should look premium
+Date | Description | Category | Amount
+Transactions                              + Add transaction
+
+Search transactions...       Filter ▾     This month ▾
+
+
+┌──────────────────────────────────────────────────────────┐
+│ TRANSACTION             CATEGORY        DATE       AMOUNT │
+├──────────────────────────────────────────────────────────┤
+│ 🛒  Whole Foods         Food            Aug 20     -$82   │
+│     Grocery shopping                                    │
+│                                                          │
+│ ☕  Starbucks            Dining          Aug 19     -$12  │
+│     Coffee                                                │
+│                                                          │
+│ 💼  Salary              Income          Aug 18    +$4200 │
+└──────────────────────────────────────────────────────────┘

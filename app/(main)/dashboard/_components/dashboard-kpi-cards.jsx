@@ -15,10 +15,11 @@ export function DashboardKpiCards({
   totalBalance = 0,
   totalIncome = 0,
   totalExpense = 0,
-  balanceChangePercent = 12.4,
-  incomeChangePercent = 8.2,
-  expenseChangePercent = -4.1,
+  balanceChangePercent = 0,
+  incomeChangePercent = 0,
+  expenseChangePercent = 0,
   accountsCount = 1,
+  accountName = "Personal",
 }) {
   const formatCurrency = (val) => {
     return new Intl.NumberFormat("en-US", {
@@ -37,7 +38,7 @@ export function DashboardKpiCards({
         <CardContent className="p-5 sm:p-6 relative z-10 flex flex-col justify-between h-full">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-              Total Balance
+              Account Balance
             </span>
             <div className="h-9 w-9 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 group-hover:scale-110 transition-transform">
               <Wallet className="h-4 w-4" />
@@ -72,7 +73,7 @@ export function DashboardKpiCards({
           </div>
 
           <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-500">
-            <span>Across {accountsCount} active {accountsCount === 1 ? "account" : "accounts"}</span>
+            <span>Default: <strong className="text-slate-200 font-semibold">{accountName}</strong></span>
             <span className="text-orange-400/80 font-medium">Real-time</span>
           </div>
         </CardContent>

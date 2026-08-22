@@ -6,7 +6,7 @@ import { Plus, PenBox, Bell, Calendar, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CreateAccountDrawer } from "@/components/create-account-drawer";
 
-export function DashboardHeader({ userName = "there" }) {
+export function DashboardHeader({ userName = "there", defaultAccount = null }) {
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return "Good morning";
@@ -23,14 +23,23 @@ export function DashboardHeader({ userName = "there" }) {
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-white/[0.06]">
       <div>
-        <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-center gap-2 mb-1 flex-wrap">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-center gap-2">
             {getGreeting()}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300 capitalize">{userName}</span>
             <span className="inline-block animate-wave text-2xl">👋</span>
           </h1>
+          {defaultAccount && (
+            <Link
+              href={`/account/${defaultAccount.id}`}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20 hover:bg-orange-500/20 transition-all cursor-pointer"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse" />
+              <span>Default: {defaultAccount.name}</span>
+            </Link>
+          )}
         </div>
         <p className="text-sm text-slate-400 flex items-center gap-2">
-          <span>Here's your financial overview & cash insights</span>
+          <span>Overview for default account</span>
           <span className="hidden sm:inline text-slate-600">•</span>
           <span className="hidden sm:inline-flex items-center gap-1 text-xs text-orange-400/90 font-medium bg-orange-500/10 px-2 py-0.5 rounded-full border border-orange-500/20">
             <Sparkles className="h-3 w-3" /> Live Analytics

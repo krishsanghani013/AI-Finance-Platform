@@ -28,7 +28,7 @@ const HeroSection = () => {
         {/* Top Feature Pill */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-slate-300 mb-8 shadow-inner hover:border-orange-500/30 transition-all cursor-default">
           <span className="flex h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
-          <span className="text-orange-400 font-semibold">Flowoid 2.0</span>
+          <span className="text-orange-400 font-semibold">Flowoid</span>
           <span className="text-slate-500">•</span>
           <span className="flex items-center gap-1 text-slate-300">
             <Sparkles className="h-3 w-3 text-amber-400" />
@@ -38,19 +38,15 @@ const HeroSection = () => {
 
         {/* Main Headline */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.12]">
-          Master Your Cash Flow <br className="hidden sm:inline" />
-          with{" "}
+          Money can be complicated. <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-amber-500">
-            Intelligent Clarity
+            Managing it doesn&apos;t have to be.
           </span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-base sm:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed font-normal">
-          The next-generation AI financial platform designed for high-performing
-          individuals. Track income in{" "}
-          <span className="text-emerald-400 font-semibold">green</span>, expenses in{" "}
-          <span className="text-red-400 font-semibold">red</span>, and optimize your wealth automatically.
+          Flowoid helps you keep up with your expenses, budgets, and everyday spending—so you always know how you&apos;re doing.
         </p>
 
         {/* CTA Buttons */}
