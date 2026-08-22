@@ -14,18 +14,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.className}>
-      <body>
+    <html lang="en" className={`${inter.className} dark`}>
+      <body className="bg-[#090A0F] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-orange-500/20 selection:text-orange-300">
         <ClerkProvider>
           <Header />
 
-          <main className="min-h-screen">
+          <main className="flex-1">
             {children}
           </main>
-          <Toaster richColors />
-          <footer className="bg-blue-50 py-12">
-            <div className="container mx-auto px-4 text-center text-gray-600">
-              <p>Made with ❤️ by Flowoid</p>
+          <Toaster richColors theme="dark" position="bottom-right" />
+          <footer className="border-t border-white/[0.07] bg-[#0B0D14]/80 py-8 backdrop-blur-md">
+            <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse"></span>
+                <span className="font-semibold text-slate-200">Flowoid AI</span>
+                <span>• Intelligent Financial Management</span>
+              </div>
+              <p className="text-slate-500">Made with ❤️ for financial clarity</p>
             </div>
           </footer>
         </ClerkProvider>

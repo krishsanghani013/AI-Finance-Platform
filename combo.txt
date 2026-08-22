@@ -1,0 +1,52 @@
+1. Change the visual identity first
+| Element    | Direction                       |
+| ---------- | ------------------------------- |
+| Background | Very dark charcoal / near-black |
+| Primary    | Ember/orange accent             |
+| Secondary  | Warm amber                      |
+| Cards      | Slightly lighter dark surfaces  |
+| Borders    | Very subtle                     |
+| Text       | White + muted gray              |
+| Charts     | Minimal, elegant                |
+| Radius     | 12–16px                         |
+| Shadows    | Very subtle                     |
+| Typography | Inter / Geist                   |
+| Icons      | Lucide                          |
+| Animation  | Minimal                         |
+
+2. Redesign the Dashboard completely
+┌─────────────────────────────────────────────────────────────┐
+│ Good morning, Krish                         🔔   👤         │
+│ Here's your financial overview                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Total Balance          Income              Expenses        │
+│  $24,680.42             $8,420               $3,280         │
+│  ↑ 12.4%                ↑ 8.2%               ↓ 4.1%        │
+│                                                             │
+├──────────────────────────────────────┬──────────────────────┤
+│                                      │                      │
+│  Cash Flow                           │  Spending Breakdown  │
+│                                      │                      │
+│  $                                    │       ◉            │
+│     ╭────╮                            │    Food  24%        │
+│    ╱      ╲       ╭──                │    Bills 31%        │
+│ ──╯        ╲──────╯                   │    Travel 12%       │
+│                                      │                      │
+│  Jan Feb Mar Apr May Jun              │                      │
+│                                      │                      │
+├──────────────────────────────────────┴──────────────────────┤
+│                                                             │
+│  Budget Progress                           View all →       │
+│                                                             │
+│  Food                 ███████████░░  78%                    │
+│  Entertainment        ███████░░░░░  52%                    │
+│  Transport             █████████░░░  67%                    │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│ Recent Transactions                         View all →       │
+│                                                             │
+│  🛒  Grocery Store       Food          -$82.40              │
+│  ☕  Starbucks            Food          -$12.50              │
+│  💼  Salary              Income       +$4,200               │
+└─────────────────────────────────────────────────────────────┘

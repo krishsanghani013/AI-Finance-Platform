@@ -51,7 +51,6 @@ import { cn } from "@/lib/utils";
 import { categoryColors } from "@/data/categories";
 import { bulkDeleteTransactions } from "@/actions/accounts";
 import useFetch from "@/hooks/use-fetch";
-import { BarLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 
 const ITEMS_PER_PAGE = 10;
@@ -205,7 +204,9 @@ export default function TransactionTable({ transactions }) {
     return (
         <div className="space-y-4">
             {deleteLoading && (
-                <BarLoader className="mt-4" width={"100%"} color="#9333ea" />
+                <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden my-3">
+                    <div className="h-full bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500 w-1/3 animate-pulse-glow rounded-full" />
+                </div>
             )}
             {/* Filters */}
             <div className="flex flex-col sm:flex-row gap-4">

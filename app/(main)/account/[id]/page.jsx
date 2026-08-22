@@ -1,7 +1,7 @@
 import { getAccountWithTransactions } from '@/actions/accounts';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { BarLoader } from 'react-spinners';
+import { DashboardLoader } from '@/components/dashboard-loader';
 import TransactionTable from '../_components/transaction-table';
 import AccountChart from '../_components/account-chart';
 
@@ -19,7 +19,7 @@ const AccountsPage = async ({ params }) => {
     <div className='space-y-8 px-5'>
       <div className='flex items-end justify-between'>
         <div>
-          <h1 className='text-5xl  sm:text-6xl font-bold gradient-title capitalize'>{account.name}</h1>
+          <h1 className='text-5xl sm:text-6xl font-bold gradient-title capitalize'>{account.name}</h1>
           <p className='text-muted-foreground'>{account.type.charAt(0) + account.type.slice(1).toLowerCase()} Account</p>
         </div>
         <div className='text-right pb-2'>
@@ -29,11 +29,11 @@ const AccountsPage = async ({ params }) => {
       </div>
 
       {/* Chart Section */}
-      <Suspense fallback={<BarLoader className='mt-4' width={"100%"} color='#9333ea' />}>
+      <Suspense fallback={<DashboardLoader text="Loading analytics chart..." />}>
         <AccountChart transactions={transactions} />
       </Suspense>
       {/* Transaction Table */}
-      <Suspense fallback={<BarLoader className='mt-4' width={"100%"} color='#9333ea' />}>
+      <Suspense fallback={<DashboardLoader text="Loading ledger transactions..." />}>
         <TransactionTable transactions={transactions} />
       </Suspense>
     </div>

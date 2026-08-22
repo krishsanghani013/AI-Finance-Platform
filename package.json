@@ -1,12 +1,13 @@
 {
-  "name": "welth",
+  "name": "flowoid",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
+    "postinstall": "prisma generate",
     "inngest:dev": "npx inngest-cli@latest dev -u http://localhost:3000/api/inngest"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "next": "16.3.1",
     "next-themes": "^0.4.6",
     "pg": "^8.23.0",
+    "prisma": "^7.9.1",
     "react": "19.2.8",
     "react-day-picker": "^10.0.1",
     "react-dom": "19.2.8",
@@ -44,7 +46,6 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.1",
-    "prisma": "^6.12.0",
     "tailwindcss": "^4"
   }
 }
